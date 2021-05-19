@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:hint="Email" />
+                    android:hint="Opponents Email" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -648,9 +648,13 @@
                 android:id="@+id/buEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_back"
                 android:gravity="center"
                 android:onClick="endGame"
-                android:text="END GAME" />
+                android:text="END GAME"
+                app:backgroundTint="@android:color/transparent"
+                app:backgroundTintMode="add"
+                app:iconTintMode="add" />
         </LinearLayout>
 
     </LinearLayout>

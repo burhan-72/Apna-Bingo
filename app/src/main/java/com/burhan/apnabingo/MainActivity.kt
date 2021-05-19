@@ -356,49 +356,47 @@ class MainActivity : AppCompatActivity() {
                                 lost=true
                                 if(lost&&count1>=5){
                                     tvTurn.text="DRAW!!!"
-                                    Toast.makeText(this@MainActivity,"GAME DRAW!!!",Toast.LENGTH_LONG).show()
-                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+//                                    Toast.makeText(this@MainActivity,"GAME DRAW!!!",Toast.LENGTH_LONG).show()
                                     myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("drawn")
                                     endGame(endBtn)
 
                                 }
                                 else if(lost&&count1>=5){
                                     tvTurn.text="YOU WON!!!"
-                                    Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
-                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+//                                    Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
                                     myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("lost")
                                     endGame(endBtn)
                                 }
                                 else if(lost&&count1<5){
                                     tvTurn.text="YOU LOST!!!"
-                                    Toast.makeText(this@MainActivity,"YOU LOST!!!",Toast.LENGTH_LONG).show()
-                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+//                                    Toast.makeText(this@MainActivity,"YOU LOST!!!",Toast.LENGTH_LONG).show()
                                     myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("won")
                                     endGame(endBtn)
                                 }
                             }
                             else if(key!=splitString(myEmail!!)&&dt[key].toString().equals("won")){
-                                Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
-                                myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                tvTurn.text="YOU WON!!"
+//                                Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
                                 endGame(endBtn)
                             }
 
                             else if(key!=splitString(myEmail!!)&&dt[key].toString().equals("lost")){
-                                Toast.makeText(this@MainActivity,"YOU LOST!!!  ",Toast.LENGTH_LONG).show()
-                                myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                tvTurn.text="YOU LOST!!"
+//                                Toast.makeText(this@MainActivity,"YOU LOST!!!  ",Toast.LENGTH_LONG).show()
                                 endGame(endBtn)
                             }
 
                             else if(key!=splitString(myEmail!!)&&dt[key].toString().equals("drawn")){
-                                Toast.makeText(this@MainActivity,"GAME DRAWN!!!  ",Toast.LENGTH_LONG).show()
-                                myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                tvTurn.text="GAME DRAWN!!"
+//                                Toast.makeText(this@MainActivity,"GAME DRAWN!!!  ",Toast.LENGTH_LONG).show()
                                 endGame(endBtn)
                             }
+                            myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
                         }
                     }
                 }
                 catch (ex:java.lang.Exception){
-
+                    Log.e("error message","Event Listener",ex)
                 }
             }
 
@@ -456,6 +454,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun endGame(view: View) {
+        var buEndGame=view as Button
+        buEndGame.isVisible=false
         var buSelected: Button = findViewById(id.button1)
         for (i in 1..25) {
             when (i) {
