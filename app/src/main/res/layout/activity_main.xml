@@ -15,8 +15,8 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
+            android:id="@+id/connectionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2pt"
@@ -78,29 +78,11 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/buStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_back"
-                android:onClick="buStartClickEvent"
-
-                android:text="START GAME"
-                app:backgroundTint="@android:color/transparent"
-                app:backgroundTintMode="add" />
-        </LinearLayout>
-
         <TableLayout
             android:id="@+id/bingoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@color/whiteBackground"
             android:gravity="center"
             tools:context=".MainActivity">
@@ -125,10 +107,10 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="1"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
-                    android:tag="1"
                     app:backgroundTintMode="add" />
 
                 <Button
@@ -140,10 +122,10 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="2"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
-                    android:tag="2"
                     app:backgroundTintMode="add" />
 
 
@@ -156,10 +138,10 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="3"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
-                    android:tag="3"
                     app:backgroundTintMode="add" />
 
                 <Button
@@ -171,10 +153,10 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="4"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
-                    android:tag="4"
                     app:backgroundTintMode="add" />
 
                 <Button
@@ -186,10 +168,10 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="5"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
-                    android:tag="5"
                     app:backgroundTintMode="add" />
             </TableRow>
 
@@ -209,9 +191,9 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="6"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="6"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -224,9 +206,9 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="7"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="7"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -242,9 +224,9 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="8"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="8"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -259,9 +241,9 @@
                     android:layout_weight="0"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="9"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="9"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -275,9 +257,9 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="10"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="10"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
             </TableRow>
@@ -297,9 +279,9 @@
                     android:layout_marginRight="6pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="11"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="11"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -311,9 +293,9 @@
                     android:layout_marginRight="6pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="12"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="12"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -344,8 +326,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="14"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -361,8 +343,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="15"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -385,9 +367,9 @@
                     android:layout_marginRight="6pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="16"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="16"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -399,9 +381,9 @@
                     android:layout_marginRight="6pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="17"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="17"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -416,8 +398,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="18"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -433,8 +415,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="19"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -450,8 +432,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="20"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -474,9 +456,9 @@
                     android:layout_marginRight="6pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="21"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="21"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -488,9 +470,9 @@
                     android:layout_marginRight="6pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
+                    android:tag="22"
                     android:textColor="#0C0C0C"
                     android:textSize="18sp"
-                    android:tag="22"
                     app:backgroundTint="@android:color/transparent"
                     app:backgroundTintMode="add" />
 
@@ -505,8 +487,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="23"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -522,8 +504,8 @@
                     android:layout_marginBottom="3pt"
                     android:background="@color/buttonBackground"
                     android:onClick="buClick"
-                    android:textColor="#0C0C0C"
                     android:tag="24"
+                    android:textColor="#0C0C0C"
 
                     android:textSize="18sp"
                     app:backgroundTint="@android:color/transparent"
@@ -645,6 +627,15 @@
 
 
         </TableLayout>
+
+        <TextView
+            android:id="@+id/tvTurn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>
