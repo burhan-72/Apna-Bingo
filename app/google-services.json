@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "82078194087",
+    "project_id": "apna-bingo",
+    "storage_bucket": "apna-bingo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82078194087:android:61ceb2b5cf262c47293e82",
+        "android_client_info": {
+          "package_name": "com.burhan.apnabingo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82078194087-nl8gvvejrt64er754o1hlnc8u0g6gof6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncFq_GXDwMsnNACzFxacRthl3IhK4xY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82078194087-nl8gvvejrt64er754o1hlnc8u0g6gof6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
