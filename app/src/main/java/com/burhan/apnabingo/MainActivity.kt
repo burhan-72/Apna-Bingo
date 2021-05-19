@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         inComingCalls()
         var bingoLayout=findViewById<TableLayout>(id.bingoLayout)
         bingoLayout.isVisible=false
+
+        var endLayout=findViewById<LinearLayout>(R.id.endLayout)
+        endLayout.isVisible=false
     }
 
     var activePlayer=1
@@ -35,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     fun StartClickEvent() {
         var bingoLayout=findViewById<TableLayout>(id.bingoLayout)
         bingoLayout.isVisible=true
+
+        var endLayout=findViewById<LinearLayout>(R.id.endLayout)
+        endLayout.isVisible=true
 
         var connLayout=findViewById<LinearLayout>(R.id.connectionLayout)
         connLayout.isVisible=false
@@ -84,58 +90,7 @@ class MainActivity : AppCompatActivity() {
             buSelected.text=shuffledList[i-1].toString()
         }
     }
-    fun reset() {
-        var buSelected: Button = findViewById(id.button1)
-        for (i in 1..25) {
-            when (i) {
-                1 -> buSelected = findViewById(id.button1)
-                2 -> buSelected = findViewById(id.button2)
-                3 -> buSelected = findViewById(id.button3)
-                4 -> buSelected = findViewById(id.button4)
-                5 -> buSelected = findViewById(id.button5)
-                6 -> buSelected = findViewById(id.button6)
-                7 -> buSelected = findViewById(id.button7)
-                8 -> buSelected = findViewById(id.button8)
-                9 -> buSelected = findViewById(id.button9)
-                10 -> buSelected = findViewById(id.button10)
-                11 -> buSelected = findViewById(id.button11)
-                12 -> buSelected = findViewById(id.button12)
-                13 -> buSelected = findViewById(id.button13)
-                14 -> buSelected = findViewById(id.button14)
-                15 -> buSelected = findViewById(id.button15)
-                16 -> buSelected = findViewById(id.button16)
-                17 -> buSelected = findViewById(id.button17)
-                18 -> buSelected = findViewById(id.button18)
-                19 -> buSelected = findViewById(id.button19)
-                20 -> buSelected = findViewById(id.button20)
-                21 -> buSelected = findViewById(id.button21)
-                22 -> buSelected = findViewById(id.button22)
-                23 -> buSelected = findViewById(id.button23)
-                24 -> buSelected = findViewById(id.button24)
-                25 -> buSelected = findViewById(id.button25)
 
-            }
-            buSelected.text = ""
-            buSelected.setBackgroundColor(buSelected.resources.getColor(R.color.buttonBackground))
-            buSelected.setTextColor(buSelected.resources.getColor(R.color.black))
-            buSelected.isEnabled = true
-            player1.clear()
-
-        }
-        for(i in 1..5){
-            when(i){
-                1 -> buSelected = findViewById(id.buttonB)
-                2 -> buSelected = findViewById(id.buttonI)
-                3 -> buSelected = findViewById(id.buttonN)
-                4 -> buSelected = findViewById(id.buttonG)
-                5 -> buSelected = findViewById(id.buttonO)
-            }
-            buSelected.setBackgroundResource(color.yellow)
-            buSelected.isEnabled = false
-        }
-        var bingoLayout=findViewById<TableLayout>(id.bingoLayout)
-        bingoLayout.isVisible=false
-    }
     fun inComingCalls(){
         myRef.child("user").child(splitString(myEmail.toString())).child("Request").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -168,6 +123,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     var moveCount=0;
+
+
     fun buClick(view: View) {
         val buSelected: Button =view as Button
 
@@ -205,22 +162,22 @@ class MainActivity : AppCompatActivity() {
         buSelected.setTextColor(buSelected.resources.getColor(R.color.red))
         buSelected.isEnabled=false
         player1.add(cellId)
+        checkwin()
         var turnText=findViewById<TextView>(R.id.tvTurn)
         turnText.text="OPPONENTS TURN"
         moveCount++
-        checkwin()
         Log.i("info message","Size of array ${player1.size}")
         for(ele in player1){
             Log.i("info message",ele.toString())
         }
         myRef.child("playerOnline").child(sessionID.toString()).child(buSelected.text.toString()).setValue(myEmail)
-
+        chechWin2()
 
     }
-
+    var count1=0
     fun checkwin(){
 
-        var count1=0
+        count1=0
         //row 1
         if(player1.contains(1)&&player1.contains(2)&&player1.contains(3)&&player1.contains(4)&&player1.contains(5)){
             count1+=1
@@ -301,8 +258,7 @@ class MainActivity : AppCompatActivity() {
         }
         if(count1>=5){
             buO.setTextColor(buB.resources.getColor(R.color.orange))
-//            myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("yes")
-
+            myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("yes")
         }
 
 
@@ -373,12 +329,7 @@ class MainActivity : AppCompatActivity() {
                             else{
                                 autoPlay(key.toInt())
                             }
-                            if(playerSymbol!=null && playerSymbol==1){
-                                if(moveCount==12){
-                                    myRef.child("playerOnline").child(sessionID).setValue(true)
-                                    moveCount=0
-                                }
-                            }
+                            myRef.child("playerOnline").child(sessionID).setValue(true)
 
                         }
                     }
@@ -390,6 +341,73 @@ class MainActivity : AppCompatActivity() {
                 Log.d("error message",error.toString())
             }
         })
+    }
+    var lost=false
+    fun chechWin2(){
+        myRef.child("playerOnline").child(sessionID.toString()).addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                try{
+                    val dt=snapshot.value as HashMap<String,Any>
+                    if(dt!=null){
+                        for(key in dt.keys){
+                            var tvTurn=findViewById<TextView>(R.id.tvTurn)
+                            var endBtn=findViewById<Button>(R.id.buEnd)
+                            if(key!=splitString(myEmail!!)&&dt[key].toString().equals("yes")){
+                                lost=true
+                                if(lost&&count1>=5){
+                                    tvTurn.text="DRAW!!!"
+                                    Toast.makeText(this@MainActivity,"GAME DRAW!!!",Toast.LENGTH_LONG).show()
+                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("drawn")
+                                    endGame(endBtn)
+
+                                }
+                                else if(lost&&count1>=5){
+                                    tvTurn.text="YOU WON!!!"
+                                    Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
+                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("lost")
+                                    endGame(endBtn)
+                                }
+                                else if(lost&&count1<5){
+                                    tvTurn.text="YOU LOST!!!"
+                                    Toast.makeText(this@MainActivity,"YOU LOST!!!",Toast.LENGTH_LONG).show()
+                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                    myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("won")
+                                    endGame(endBtn)
+                                }
+                            }
+                            else if(key!=splitString(myEmail!!)&&dt[key].toString().equals("won")){
+                                Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
+                                myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                endGame(endBtn)
+                            }
+
+                            else if(key!=splitString(myEmail!!)&&dt[key].toString().equals("lost")){
+                                Toast.makeText(this@MainActivity,"YOU LOST!!!  ",Toast.LENGTH_LONG).show()
+                                myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                endGame(endBtn)
+                            }
+
+                            else if(key!=splitString(myEmail!!)&&dt[key].toString().equals("drawn")){
+                                Toast.makeText(this@MainActivity,"GAME DRAWN!!!  ",Toast.LENGTH_LONG).show()
+                                myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).removeValue()
+                                endGame(endBtn)
+                            }
+                        }
+                    }
+                }
+                catch (ex:java.lang.Exception){
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+
     }
 
     fun autoPlay(number:Int){
@@ -435,6 +453,76 @@ class MainActivity : AppCompatActivity() {
                 break
             }
         }
+    }
+
+    fun endGame(view: View) {
+        var buSelected: Button = findViewById(id.button1)
+        for (i in 1..25) {
+            when (i) {
+                1 -> buSelected = findViewById(id.button1)
+                2 -> buSelected = findViewById(id.button2)
+                3 -> buSelected = findViewById(id.button3)
+                4 -> buSelected = findViewById(id.button4)
+                5 -> buSelected = findViewById(id.button5)
+                6 -> buSelected = findViewById(id.button6)
+                7 -> buSelected = findViewById(id.button7)
+                8 -> buSelected = findViewById(id.button8)
+                9 -> buSelected = findViewById(id.button9)
+                10 -> buSelected = findViewById(id.button10)
+                11 -> buSelected = findViewById(id.button11)
+                12 -> buSelected = findViewById(id.button12)
+                13 -> buSelected = findViewById(id.button13)
+                14 -> buSelected = findViewById(id.button14)
+                15 -> buSelected = findViewById(id.button15)
+                16 -> buSelected = findViewById(id.button16)
+                17 -> buSelected = findViewById(id.button17)
+                18 -> buSelected = findViewById(id.button18)
+                19 -> buSelected = findViewById(id.button19)
+                20 -> buSelected = findViewById(id.button20)
+                21 -> buSelected = findViewById(id.button21)
+                22 -> buSelected = findViewById(id.button22)
+                23 -> buSelected = findViewById(id.button23)
+                24 -> buSelected = findViewById(id.button24)
+                25 -> buSelected = findViewById(id.button25)
+
+            }
+            buSelected.text = ""
+            buSelected.setBackgroundColor(buSelected.resources.getColor(R.color.buttonBackground))
+            buSelected.setTextColor(buSelected.resources.getColor(R.color.black))
+            buSelected.isEnabled = true
+        }
+        for(i in 1..5){
+            when(i){
+                1 -> buSelected = findViewById(id.buttonB)
+                2 -> buSelected = findViewById(id.buttonI)
+                3 -> buSelected = findViewById(id.buttonN)
+                4 -> buSelected = findViewById(id.buttonG)
+                5 -> buSelected = findViewById(id.buttonO)
+            }
+            buSelected.setBackgroundResource(color.yellow)
+            buSelected.isEnabled = false
+        }
+        player1.clear()
+
+        var bingoLayout=findViewById<TableLayout>(id.bingoLayout)
+        bingoLayout.isVisible=false
+
+
+
+        var connLayout=findViewById<LinearLayout>(R.id.connectionLayout)
+        connLayout.isVisible=true
+
+        var tvEmail=findViewById<TextView?>(id.etEmail)
+        tvEmail!!.text=""
+
+        var acButton=findViewById<Button>(R.id.buAccept)
+        acButton.isEnabled=true
+
+        var reButton=findViewById<Button>(R.id.buRequest)
+        reButton.isEnabled=true
+
+
+
     }
 
 }

@@ -628,14 +628,31 @@
 
         </TableLayout>
 
-        <TextView
-            android:id="@+id/tvTurn"
+        <LinearLayout
+            android:id="@+id/endLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTurn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="endGame"
+                android:text="END GAME" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
