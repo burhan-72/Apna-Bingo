@@ -57,6 +57,7 @@ class signin : AppCompatActivity() {
                     Toast.makeText(this,"REGISTER SUCCESSFULLY",Toast.LENGTH_SHORT).show()
                     var intent= Intent(this,login::class.java)
                     startActivity(intent)
+                    finish()
 
 
                 } else {

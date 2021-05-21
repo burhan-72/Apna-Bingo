@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         endLayout.isVisible=false
     }
 
-    var activePlayer=1
     var player1= mutableSetOf<Int>()
 
     fun StartClickEvent() {
@@ -85,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                 23->buSelected=findViewById(id.button23)
                 24->buSelected=findViewById(id.button24)
                 25->buSelected=findViewById(id.button25)
-
             }
             buSelected.text=shuffledList[i-1].toString()
         }
@@ -121,10 +119,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
-    var moveCount=0;
-
-
     fun buClick(view: View) {
         val buSelected: Button =view as Button
 
@@ -157,21 +151,20 @@ class MainActivity : AppCompatActivity() {
             id.button25->cellId=25
 
         }
+
         Log.d("buClick: cellId",cellId.toString())
         buSelected.setBackgroundColor(buSelected.resources.getColor(R.color.black))
         buSelected.setTextColor(buSelected.resources.getColor(R.color.red))
         buSelected.isEnabled=false
         player1.add(cellId)
+
         checkwin()
+
         var turnText=findViewById<TextView>(R.id.tvTurn)
         turnText.text="OPPONENTS TURN"
-        moveCount++
-        Log.i("info message","Size of array ${player1.size}")
-        for(ele in player1){
-            Log.i("info message",ele.toString())
-        }
+
         myRef.child("playerOnline").child(sessionID.toString()).child(buSelected.text.toString()).setValue(myEmail)
-        chechWin2()
+        checkWin2()
 
     }
     var count1=0
@@ -260,10 +253,7 @@ class MainActivity : AppCompatActivity() {
             buO.setTextColor(buB.resources.getColor(R.color.orange))
             myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("yes")
         }
-
-
     }
-
 
 
     fun buAcceptEvent(view: android.view.View) {
@@ -278,8 +268,6 @@ class MainActivity : AppCompatActivity() {
         var reButton=findViewById<Button>(R.id.buRequest)
         reButton.isEnabled=false
         StartClickEvent()
-
-
     }
 
     fun RequestEvent(view: View) {
@@ -297,9 +285,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this,"Request sent!!",Toast.LENGTH_SHORT).show()
         myRef.child("user").child(splitString(userEmail!!)).child("Request").push().setValue(myEmail!!)
         playOnline(splitString(myEmail!!)+splitString(userEmail))
-
-
-
     }
 
     fun splitString(str:String):String{
@@ -342,8 +327,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
     var lost=false
-    fun chechWin2(){
+    fun checkWin2(){
         myRef.child("playerOnline").child(sessionID.toString()).addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 try{
@@ -356,21 +342,21 @@ class MainActivity : AppCompatActivity() {
                                 lost=true
                                 if(lost&&count1>=5){
                                     tvTurn.text="DRAW!!!"
-//                                    Toast.makeText(this@MainActivity,"GAME DRAW!!!",Toast.LENGTH_LONG).show()
                                     myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("drawn")
+//                                    Toast.makeText(this@MainActivity,"GAME DRAW!!!",Toast.LENGTH_LONG).show()
                                     endGame(endBtn)
 
                                 }
                                 else if(lost&&count1>=5){
                                     tvTurn.text="YOU WON!!!"
-//                                    Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
                                     myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("lost")
+//                                    Toast.makeText(this@MainActivity,"YOU WON!!!  ",Toast.LENGTH_LONG).show()
                                     endGame(endBtn)
                                 }
                                 else if(lost&&count1<5){
                                     tvTurn.text="YOU LOST!!!"
-//                                    Toast.makeText(this@MainActivity,"YOU LOST!!!",Toast.LENGTH_LONG).show()
                                     myRef.child("playerOnline").child(sessionID.toString()).child(splitString(myEmail!!)).setValue("won")
+//                                    Toast.makeText(this@MainActivity,"YOU LOST!!!",Toast.LENGTH_LONG).show()
                                     endGame(endBtn)
                                 }
                             }
@@ -399,17 +385,14 @@ class MainActivity : AppCompatActivity() {
                     Log.e("error message","Event Listener",ex)
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
 
             }
         })
-
-
     }
 
     fun autoPlay(number:Int){
-        var buSelected: Button = findViewById(id.button1)
+        var buSelected: Button?=null
         for (i in 1..25) {
             when (i) {
                 1 -> buSelected = findViewById(id.button1)
@@ -439,14 +422,13 @@ class MainActivity : AppCompatActivity() {
                 25 -> buSelected = findViewById(id.button25)
 
             }
-            if (buSelected.text.equals(number.toString())) {
+            if (buSelected!!.text.equals(number.toString())) {
                 buSelected.setBackgroundColor(buSelected.resources.getColor(R.color.black))
                 buSelected.setTextColor(buSelected.resources.getColor(R.color.white))
                 buSelected.isEnabled = false
                 player1.add(i)
                 var turnText=findViewById<TextView>(R.id.tvTurn)
                 turnText.text="YOURS TURN"
-                moveCount++
                 checkwin()
                 break
             }
@@ -454,8 +436,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun endGame(view: View) {
-        var buEndGame=view as Button
-        buEndGame.isVisible=false
+        var endBtn=view as Button
+        endBtn.isVisible=false
         var buSelected: Button = findViewById(id.button1)
         for (i in 1..25) {
             when (i) {
@@ -484,13 +466,14 @@ class MainActivity : AppCompatActivity() {
                 23 -> buSelected = findViewById(id.button23)
                 24 -> buSelected = findViewById(id.button24)
                 25 -> buSelected = findViewById(id.button25)
-
             }
+
             buSelected.text = ""
             buSelected.setBackgroundColor(buSelected.resources.getColor(R.color.buttonBackground))
             buSelected.setTextColor(buSelected.resources.getColor(R.color.black))
             buSelected.isEnabled = true
         }
+
         for(i in 1..5){
             when(i){
                 1 -> buSelected = findViewById(id.buttonB)
@@ -499,7 +482,7 @@ class MainActivity : AppCompatActivity() {
                 4 -> buSelected = findViewById(id.buttonG)
                 5 -> buSelected = findViewById(id.buttonO)
             }
-            buSelected.setBackgroundResource(color.yellow)
+            buSelected.setBackgroundColor(buSelected.resources.getColor(R.color.yellow))
             buSelected.isEnabled = false
         }
         player1.clear()
@@ -507,13 +490,8 @@ class MainActivity : AppCompatActivity() {
         var bingoLayout=findViewById<TableLayout>(id.bingoLayout)
         bingoLayout.isVisible=false
 
-
-
         var connLayout=findViewById<LinearLayout>(R.id.connectionLayout)
         connLayout.isVisible=true
-
-        var tvEmail=findViewById<TextView?>(id.etEmail)
-        tvEmail!!.text=""
 
         var acButton=findViewById<Button>(R.id.buAccept)
         acButton.isEnabled=true
@@ -521,8 +499,10 @@ class MainActivity : AppCompatActivity() {
         var reButton=findViewById<Button>(R.id.buRequest)
         reButton.isEnabled=true
 
+        var tvEmail=findViewById<TextView?>(id.etEmail)
+        tvEmail!!.text=""
+
 
 
     }
-
 }

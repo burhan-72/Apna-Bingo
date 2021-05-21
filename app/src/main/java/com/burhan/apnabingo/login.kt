@@ -71,10 +71,10 @@ class login : AppCompatActivity() {
         startActivity(intent)
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        loadMain()
-//    }
+    override fun onStart() {
+        super.onStart()
+        loadMain()
+    }
 
     fun loadMain(){
         var currentUser=auth!!.currentUser
@@ -84,6 +84,7 @@ class login : AppCompatActivity() {
             intent.putExtra("email", currentUser.email)
             intent.putExtra("uid", currentUser.uid)
             startActivity(intent)
+            finish()
         }
     }
 
